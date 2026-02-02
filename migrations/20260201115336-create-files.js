@@ -28,14 +28,14 @@ module.exports = {
       },
 
       qrCodeId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        allowNull: true,
         references: {
           model: 'tbl_qr_codes',
           key: 'id',
         },
         onUpdate: 'SET NULL',
         onDelete: 'SET NULL',
-        allowNull: true,
       },
 
       cover: {

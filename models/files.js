@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       mimetype: DataTypes.STRING,
       size: DataTypes.INTEGER,
       qrCodeId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
       },
       cover: DataTypes.BOOLEAN,
     },
