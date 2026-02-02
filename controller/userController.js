@@ -134,6 +134,8 @@ const getUsers = catchAsync(async (req, res, next) => {
     where: {
       id: ids,
     },
+    order: queryOptions.order,
+
     include: ['qrcodes'],
   });
 

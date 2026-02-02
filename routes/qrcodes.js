@@ -14,6 +14,7 @@ router.use(protect, restrictTo('user'));
 
 router.route('/').post(uploadFile).delete(deleteFiles).get(getFiles);
 
-router.route('/:id').get(getFile).patch(updateFile).delete(deleteFile);
+router.route('/:id').get(getFile).patch(updateFile);
+// .delete(deleteFile);
 
 module.exports = router;

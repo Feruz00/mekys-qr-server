@@ -44,6 +44,7 @@ const getFiles = catchAsync(async (req, res, next) => {
     where: {
       id: ids,
     },
+    order: queryOptions.order,
     include: ['file'],
   });
   return res.json({
