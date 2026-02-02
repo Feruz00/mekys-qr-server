@@ -29,7 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 // add here middleware jwt
 // app.use('/uploads', protect, express.static(path.join(__dirname, 'uploads')));
 
-app.use('/', require('./routes/video'));
+app.use('/api/', require('./routes/video'));
 
 app.use('/api/users', require('./routes/user'));
 app.use('/api/auth', require('./routes/auth'));
