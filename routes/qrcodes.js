@@ -10,11 +10,13 @@ const { protect, restrictTo } = require('../middleware/jwt');
 
 const router = require('express').Router();
 
+router.get('/:id', getFile);
+
 router.use(protect, restrictTo('user'));
 
 router.route('/').post(uploadFile).delete(deleteFiles).get(getFiles);
 
-router.route('/:id').get(getFile).patch(updateFile);
+router.route('/:id').patch(updateFile);
 // .delete(deleteFile);
 
 module.exports = router;

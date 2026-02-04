@@ -52,7 +52,15 @@ const getFiles = catchAsync(async (req, res, next) => {
     count,
   });
 });
-const getFile = catchAsync(async (req, res, next) => {});
+const getFile = catchAsync(async (req, res, next) => {
+  const qr = await QrCodes.findByPk(req.params.id, {
+    include: ['file'],
+  });
+  if (!qr) {
+    return next(new AppError('Data not found', 404));
+  }
+  return res.json({ data: qr });
+});
 
 const deleteFile = catchAsync(async (req, res, next) => {
   const code = await QrCodes.findByPk(req.params.id);

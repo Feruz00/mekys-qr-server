@@ -10,6 +10,10 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       QrCodes.belongsTo(models.Users, { foreignKey: 'user_id', as: 'user' });
       QrCodes.hasOne(models.Files, { foreignKey: 'qrCodeId', as: 'file' });
+      QrCodes.hasMany(models.QrView, {
+        foreignKey: 'qrId',
+        as: 'views',
+      });
     }
   }
   QrCodes.init(

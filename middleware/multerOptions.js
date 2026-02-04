@@ -27,6 +27,8 @@ const storage = multer.diskStorage({
 
     if (file.mimetype.startsWith('video/')) {
       url = folderToCreate('video');
+    } else if (file.mimetype.startsWith('audio/')) {
+      url = folderToCreate('audio');
     } else {
       return cb(new Error('Invalid file type. Only videos are allowed.'));
     }
@@ -47,17 +49,37 @@ const fileFilter = (req, file, cb) => {
   if (!req.user) {
     return cb(new Error('Unauthorized. No user information found.'));
   }
-  const allowedTypes = ['video/'];
+  const allowedTypes = ['video/', 'audio/'];
+  const mime = file.mimetype;
 
-  if (
+  const allowedExtensions = [
+    // videos
+    '.mp4',
+    '.webm',
+    '.avi',
+    '.mkv',
+    // audio
+    '.mp3',
+    '.wav',
+  ];
+  const ext = path.extname(file.originalname).toLowerCase();
+
+  const mimeOk =
     allowedTypes.some(
-      (type) =>
-        file.mimetype.startsWith(type) || allowedTypes.includes(file.mimetype)
-    )
-  ) {
+      (type) => mime.startsWith(type) || allowedTypes.includes(mime)
+    ) || false;
+  const extOk = allowedExtensions.includes(ext);
+
+  if (mimeOk && extOk) {
     cb(null, true);
   } else {
-    cb(new Error('Invalid file type. Only videos are allowed.'));
+    cb(
+      new Error(
+        `❌ Invalid file: ${
+          file.originalname
+        }\nAllowed extensions: ${allowedExtensions.join(', ')}`
+      )
+    );
   }
 };
 

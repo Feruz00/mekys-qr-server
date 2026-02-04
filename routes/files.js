@@ -1,4 +1,9 @@
-const { deleteFile, uploadFile } = require('../controller/filesController');
+const {
+  deleteFile,
+  uploadFile,
+  getFile,
+} = require('../controller/filesController');
+
 const { protect, restrictTo } = require('../middleware/jwt');
 const multerOptions = require('../middleware/multerOptions');
 
