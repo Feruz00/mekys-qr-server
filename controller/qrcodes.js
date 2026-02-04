@@ -26,8 +26,10 @@ const getFiles = catchAsync(async (req, res, next) => {
   const { limit = 10, page = 1 } = req.query;
 
   const queryOptions = {
-    where: {},
-    order: [['id', 'desc']],
+    where: {
+      user_id: req.user.id,
+    },
+    order: [['createdAt', 'desc']],
     offset: (page - 1) * limit,
     limit: parseInt(limit, 10),
     attributes: { exclude: ['password'] },
