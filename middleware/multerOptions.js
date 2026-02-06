@@ -52,25 +52,25 @@ const fileFilter = (req, file, cb) => {
   const allowedTypes = ['video/', 'audio/'];
   const mime = file.mimetype;
 
-  const allowedExtensions = [
-    // videos
-    '.mp4',
-    '.webm',
-    '.avi',
-    '.mkv',
-    // audio
-    '.mp3',
-    '.wav',
-  ];
+  // const allowedExtensions = [
+  //   // videos
+  //   '.mp4',
+  //   '.webm',
+  //   '.avi',
+  //   '.mkv',
+  //   // audio
+  //   '.mp3',
+  //   '.wav',
+  // ];
   const ext = path.extname(file.originalname).toLowerCase();
 
   const mimeOk =
     allowedTypes.some(
       (type) => mime.startsWith(type) || allowedTypes.includes(mime)
     ) || false;
-  const extOk = allowedExtensions.includes(ext);
+  // const extOk = allowedExtensions.includes(ext);
 
-  if (mimeOk && extOk) {
+  if (mimeOk) {
     cb(null, true);
   } else {
     cb(
