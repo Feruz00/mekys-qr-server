@@ -52,6 +52,8 @@ const fileFilter = (req, file, cb) => {
   const allowedTypes = ['video/', 'audio/'];
   const mime = file.mimetype;
 
+  console.log(file);
+
   // const allowedExtensions = [
   //   // videos
   //   '.mp4',
@@ -73,13 +75,7 @@ const fileFilter = (req, file, cb) => {
   if (mimeOk) {
     cb(null, true);
   } else {
-    cb(
-      new Error(
-        `❌ Invalid file: ${
-          file.originalname
-        }\nAllowed extensions: ${allowedExtensions.join(', ')}`
-      )
-    );
+    cb(new Error(`❌ Invalid file: ${file.originalname}\n`));
   }
 };
 
