@@ -50,32 +50,16 @@ const fileFilter = (req, file, cb) => {
     return cb(new Error('Unauthorized. No user information found.'));
   }
   const allowedTypes = ['video/', 'audio/'];
-  const mime = file.mimetype;
 
-  console.log(file);
-
-  // const allowedExtensions = [
-  //   // videos
-  //   '.mp4',
-  //   '.webm',
-  //   '.avi',
-  //   '.mkv',
-  //   // audio
-  //   '.mp3',
-  //   '.wav',
-  // ];
-  const ext = path.extname(file.originalname).toLowerCase();
-
-  const mimeOk =
+  if (
     allowedTypes.some(
-      (type) => mime.startsWith(type) || allowedTypes.includes(mime)
-    ) || false;
-  // const extOk = allowedExtensions.includes(ext);
-
-  if (mimeOk) {
+      (type) =>
+        file.mimetype.startsWith(type) || allowedTypes.includes(file.mimetype)
+    )
+  ) {
     cb(null, true);
   } else {
-    cb(new Error(`❌ Invalid file: ${file.originalname}\n`));
+    cb(new Error('Invalid file type. Only videos are allowed.'));
   }
 };
 
