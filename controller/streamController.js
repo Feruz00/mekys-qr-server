@@ -14,7 +14,6 @@ const streamController = catchAsync(async (req, res, next) => {
 
   const absolutePath = path.resolve(decodeURIComponent(file.path));
 
-  // ✅ Async stat (DO NOT use statSync)
   let stat;
   try {
     stat = await fs.promises.stat(absolutePath);
