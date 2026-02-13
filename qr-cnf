@@ -1,5 +1,5 @@
 server {
-    listen 81;
+    listen 80;
     client_max_body_size 100M;
     keepalive_timeout 100;
     sendfile on;
@@ -25,7 +25,7 @@ server {
     }
 
     location / {
-        alias /var/www/qrcode/mekys-qr-client/dist/;
+        alias /var/www/qrcode/client/dist/;
         try_files $uri $uri/ /index.html;
     }
 }

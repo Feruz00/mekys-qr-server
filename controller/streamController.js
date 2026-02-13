@@ -34,7 +34,7 @@ const streamController = catchAsync(async (req, res, next) => {
   // ✅ Required headers
   res.setHeader('Content-Type', mimeType);
   res.setHeader('Accept-Ranges', 'bytes');
-
+  res.setHeader('Content-Disposition', 'inline');
   // 🔥 IMPORTANT — improves playback massively
   res.setHeader('Cache-Control', 'public, max-age=86400');
 
