@@ -20,6 +20,7 @@ It supports:
 - **MySQL**
 - **JWT Authentication**
 - **File streaming (fs + range requests)**
+- **WebSocket**
 
 ---
 
