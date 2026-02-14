@@ -15,9 +15,6 @@ const connection = {
 
 const videoQueue = new Queue('video-processing', {
   connection,
-  autorun: true,
-  // Suppress version warning (hack – not official)
-  redisOptions: { showFriendlyErrorStack: true },
 });
 
 let totalDuration = null;
