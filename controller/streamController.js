@@ -63,43 +63,44 @@ const streamController = async (req, res, next) => {
     // ------------------------------------------------
 
     if (range) {
-      // Parse range header
+      // Parse range
       const parts = range.replace(/bytes=/, '').split('-');
       const start = parseInt(parts[0], 10);
-      let end = parts[1] ? parseInt(parts[1], 10) : start + MAX_CHUNK_SIZE - 1;
+      let end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
 
-      // Make sure end is within file bounds
-      if (isNaN(end) || end < start || end >= fileSize) {
+      // FIX 1: If no end given (bytes=0-), send from start to end of file
+      if (isNaN(end) || end < start) {
         end = fileSize - 1;
       }
 
+      // FIX 2: Never go beyond file size
+      if (end >= fileSize) end = fileSize - 1;
+
       const chunkSize = end - start + 1;
 
-      // Stream the chunk
-      const fileStream = fs.createReadStream(absolutePath, {
-        start,
-        end,
-        highWaterMark: MAX_CHUNK_SIZE,
-      });
+      console.log(
+        `[Stream] Serving range ${start}-${end}/${fileSize} (${chunkSize} bytes)`
+      );
+
+      const fileStream = fs.createReadStream(absolutePath, { start, end });
 
       res.writeHead(206, {
         'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+        'Accept-Ranges': 'bytes',
         'Content-Length': chunkSize,
         'Content-Type': mimeType,
-        'Accept-Ranges': 'bytes',
       });
 
       fileStream.pipe(res);
     } else {
-      // Stream entire file (for small files or no range request)
+      // Full file
       res.writeHead(200, {
         'Content-Length': fileSize,
         'Content-Type': mimeType,
+        'Accept-Ranges': 'bytes',
       });
 
-      fs.createReadStream(absolutePath, { highWaterMark: MAX_CHUNK_SIZE }).pipe(
-        res
-      );
+      fs.createReadStream(absolutePath).pipe(res);
     }
   } catch (error) {
     console.error('Streaming error:', error.message);

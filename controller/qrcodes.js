@@ -3,6 +3,8 @@ const { Files, QrCodes } = require('../models');
 const AppError = require('../utils/appError');
 const path = require('path');
 const fs = require('fs');
+const { videoQueue } = require('../queues/videoProcessing');
+const { getIO } = require('../socket');
 
 const uploadFile = catchAsync(async (req, res, next) => {
   const { fileId } = req.body;
@@ -20,6 +22,20 @@ const uploadFile = catchAsync(async (req, res, next) => {
     count: 0,
   });
   await qr.setFile(file);
+
+  await videoQueue.add(
+    'optimize-video',
+    {
+      fileId: file.id,
+      originalPath: file.path,
+      userId: req.user.id,
+    },
+    {
+      jobId: `video-${file.id}`,
+    }
+  );
+  const io = getIO();
+  io.to(`user:${req.user.id}`).emit('processing-started', { fileId: file.id });
   return res.json({ success: true });
 });
 const getFiles = catchAsync(async (req, res, next) => {

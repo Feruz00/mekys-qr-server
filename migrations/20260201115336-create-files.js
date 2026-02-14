@@ -37,6 +37,11 @@ module.exports = {
         onUpdate: 'SET NULL',
         onDelete: 'SET NULL',
       },
+      status: {
+        type: Sequelize.ENUM('processing', 'ready', 'failed'),
+        allowNull: false,
+        defaultValue: 'processing',
+      },
 
       cover: {
         type: Sequelize.BOOLEAN,

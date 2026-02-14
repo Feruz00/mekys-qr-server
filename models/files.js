@@ -25,6 +25,11 @@ module.exports = (sequelize, DataTypes) => {
       qrCodeId: {
         type: DataTypes.UUID,
       },
+      status: {
+        type: DataTypes.ENUM('processing', 'ready', 'failed'),
+        allowNull: false,
+        defaultValue: 'processing',
+      },
       cover: DataTypes.BOOLEAN,
     },
     {
