@@ -13,7 +13,12 @@ const connection = {
   port: process.env.REDIS_PORT,
 };
 
-const videoQueue = new Queue('video-processing', { connection });
+const videoQueue = new Queue('video-processing', {
+  connection,
+  autorun: true,
+  // Suppress version warning (hack – not official)
+  redisOptions: { showFriendlyErrorStack: true },
+});
 
 let totalDuration = null;
 
