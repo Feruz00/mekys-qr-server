@@ -13,7 +13,6 @@ async function initializeSocket(httpServer) {
       origin: '*',
       methods: ['GET', 'POST'],
     },
-    path: '/socket.io/',
     transports: ['polling', 'websocket'], // allow both
   });
 
