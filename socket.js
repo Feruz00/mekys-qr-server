@@ -12,9 +12,8 @@ async function initializeSocket(httpServer) {
     cors: {
       origin: '*',
       methods: ['GET', 'POST'],
-      credentials: true,
     },
-    allowEIO3: true,
+
     transports: ['polling', 'websocket'], // allow both
   });
 
