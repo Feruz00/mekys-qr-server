@@ -72,7 +72,16 @@ const getFiles = catchAsync(async (req, res, next) => {
 });
 const getFile = catchAsync(async (req, res, next) => {
   const qr = await QrCodes.findByPk(req.params.id, {
-    include: ['file'],
+    include: [
+      {
+        model: Files,
+        as: 'file',
+        where: {
+          status: 'failed',
+        },
+        required: false,
+      },
+    ],
   });
   if (!qr) {
     return next(new AppError('Data not found', 404));

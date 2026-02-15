@@ -38,8 +38,6 @@ const streamController = async (req, res, next) => {
     const file = await Files.findOne({
       where: {
         id: req.params.id,
-
-        status: 'ready',
       },
     });
     if (!file) return next(new AppError('File not found', 404));

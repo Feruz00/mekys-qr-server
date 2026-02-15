@@ -28,9 +28,8 @@ const login = catchAsync(async (req, res, next) => {
   res.cookie('jwt', token, {
     maxAge: 30 * 24 * 60 * 60 * 1000,
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production', // true only in prod (requires HTTPS!)
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // 'none' needs secure: true
-    // domain: '.yourdomain.com'   // add if using subdomains later
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
   });
   return res.json({
     status: 'success',
