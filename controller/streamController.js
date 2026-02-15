@@ -35,7 +35,13 @@ const streamController = async (req, res, next) => {
   // ✅ Get file metadata
 
   try {
-    const file = await Files.findByPk(req.params.id);
+    const file = await Files.findOne({
+      where: {
+        id: req.params.id,
+
+        status: 'ready',
+      },
+    });
     if (!file) return next(new AppError('File not found', 404));
 
     const absolutePath = path.resolve(decodeURIComponent(file.path));
