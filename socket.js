@@ -12,7 +12,9 @@ async function initializeSocket(httpServer) {
     cors: {
       origin: '*',
       methods: ['GET', 'POST'],
+      credentials: true,
     },
+    allowEIO3: true,
     transports: ['polling', 'websocket'], // allow both
   });
 
@@ -30,7 +32,6 @@ async function initializeSocket(httpServer) {
     console.log('✅ Socket.io initialized with Redis adapter.');
   } catch (err) {
     console.error('❌ Failed to connect Socket.io to Redis:', err.message);
-    // continue without adapter if Redis fails (fallback)
   }
 
   io.on('connection', (socket) => {
